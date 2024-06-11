@@ -11,7 +11,12 @@ app.get("/test", (req, res) => {
 
 app.post("/add", (req, res) => {
   res.status(StatusCodes.CREATED);
-  res.send("Nothing is added yet until you integrate database.");
+  res.send(`Nothing is added yet until you integrate database.`);
+});
+
+app.put("/edit", (req, res) => {
+  res.status(StatusCodes.CREATED);
+  res.send(`Put request is not possible now due to uninitialized database.`);
 });
 
 app.listen(port, () => {
