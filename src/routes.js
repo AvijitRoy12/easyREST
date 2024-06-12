@@ -1,5 +1,6 @@
 import express from "express";
 import { StatusCodes } from "http-status-codes";
+import { userService } from "./services/user.service";
 
 const router = express.Router();
 
@@ -14,7 +15,8 @@ router.get("/test", (req, res) => {
 });
 
 router.post("/add", (req, res) => {
-  res.status(StatusCodes.CREATED);
+  const data = [];
+  const { body: user } = req;
   res.send(`Nothing is added yet until you integrate database.`);
 });
 
