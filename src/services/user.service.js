@@ -12,3 +12,5 @@ const addUser = (details) => {
 const removeUser = (userId) => {
   return userDao.remove(userId);
 };
+
+export default { getUser, updateUser, addUser, removeUser };

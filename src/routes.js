@@ -1,28 +1,41 @@
 import express from "express";
 import { StatusCodes } from "http-status-codes";
-import { userService } from "./services/user.service";
+
+import userService from "./services/user.service";
 
 const router = express.Router();
 
 const STATUS = {
-  status: "OK",
+  success: "OK",
   failure: "NO",
 };
 
-router.get("/test", (req, res) => {
+router.get("/ping", (req, res) => {
   res.status(StatusCodes.OK);
-  res.send("Hello You!");
+  res.send("Server is running"); 
 });
 
 router.post("/add", (req, res) => {
-  const data = [];
   const { body: user } = req;
-  res.send(`Nothing is added yet until you integrate database.`);
+  const addedUser = userService.addUser(user);
+  return res
+    .status(StatusCodes.CREATED)
+    .send({ status: STATUS.success, message: addedUser });
 });
 
-router.put("/edit", (req, res) => {
-  res.status(StatusCodes.CREATED);
-  res.send(`Put request is not possible due to uninitialized database.`);
+router.put("/update/:id", (req, res) => {
+  const { body: user } = req;
+  const id = parseInt(req.params.id, 10)
+  const updatedUser = userService.updateUser(id, user);
+  if (updatedUser) {
+    return res
+      .status(StatusCodes.OK)
+      .send({ status: STATUS.success, message: updatedUser });
+  } else {
+    return res
+      .status(StatusCodes.NOT_FOUND)
+      .send({ status: STATUS.failure, message: `${id} is not found.` });
+  }
 });
 
 export default router;

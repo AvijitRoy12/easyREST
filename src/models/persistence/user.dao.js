@@ -1,21 +1,30 @@
 import users from "../data/users.data";
 
-const getUser = () => {};
-const updateUser = () => {};
-const insert = (details) => {
-  const newUser = { ...details, id: users.length + 1 };
-  users.push(newUser);
-  return newUser;
+const get = (userId) => {
+  const finduser = users.find((user) => {
+    if (user.id === userId) {
+      return user;
+    }
+    return null;
+  });
+  return finduser;
 };
 
+const getAll = () => {
+  return users;
+};
+
+const update = (userId) => {};
+
 const remove = (userId) => {
-  const findUser = (userId, index) => {
-    if (users.id === userId) {
+  const deleteUser = (user, index) => {
+    if (user.id === userId) {
       users.splice(index, 1);
       return true;
     }
+    return false;
   };
-  return users.find(findUser);
+  return users.find(deleteUser);
 };
 
-export default { getUser, updateUser, insert, remove };
+export default { get, remove };
